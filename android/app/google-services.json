@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1048640877894",
+    "project_id": "postvideo-58b88",
+    "storage_bucket": "postvideo-58b88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048640877894:android:ce29e8446ade9ee7b4e147",
+        "android_client_info": {
+          "package_name": "com.example.postvideo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsGe21ANu916UIApyFgHA8E7UuMmDeMok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
