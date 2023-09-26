@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
+import 'dart:ui';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -11,9 +14,62 @@ class VideosController extends GetxController {
   RxBool isPlaying = false.obs;
   VideoPlayerController? videoPlayerController;
   RxBool isUploading = false.obs;
+  bool isLoading=false;
   List<String> videoUrls = [];
+  List<String> fileNames = [];
+  List<Color> colors= [
+    Colors.red,
+    Colors.green,
+    Colors.blue,
+    Colors.yellow,
+    Colors.pink,
+    Colors.purple,
+    Colors.orange,
+    Colors.teal,
+    Colors.brown,
+    Colors.indigo,
+    Colors.lime,
+    Colors.amber,
+    Colors.cyan,
+    Colors.deepOrange,
+    Colors.deepPurple,
+    Colors.lightBlue,
+    Colors.lightGreen,
+    Colors.limeAccent,
+    Colors.pinkAccent,
+    Colors.purpleAccent,
+    Colors.tealAccent,
+    Colors.yellowAccent,
+    Colors.amberAccent,
+    Colors.cyanAccent,
+    Colors.deepOrangeAccent,
+    Colors.deepPurpleAccent,
+    Colors.lightBlueAccent,
+    Colors.lightGreenAccent,
+    Colors.redAccent,
+    Colors.greenAccent,
+    Colors.blueAccent,
+  ];
+  Color generatedRandomColor(){
+    return colors[Random().nextInt(colors.length)];
+  }
+
 
   pickVideo() async {
+    final ImagePicker picker = ImagePicker();
+
+    video = await picker.pickVideo(source: ImageSource.gallery);
+    if (video != null) {
+      uploadOnFirebase();
+    } else {
+      Get.snackbar(
+        'Video Not Selected',
+        'Video Not Selected Successfully',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+    pickVideoCamera() async {
     final ImagePicker picker = ImagePicker();
 
     video = await picker.pickVideo(source: ImageSource.camera);
@@ -45,6 +101,8 @@ class VideosController extends GetxController {
         '',
         snackPosition: SnackPosition.BOTTOM,
       );
+      fetchVideosFromFirebase();
+      update();
       return url;
     } catch (e) {
       print('Error uploading video: $e');
@@ -53,33 +111,42 @@ class VideosController extends GetxController {
         'Error uploading video: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
+      update();
 
       // Handle the error here
-      throw e;
+      rethrow;
     }
   }
 
   Future<List<String>> fetchVideosFromFirebase() async {
+    isLoading=true;
     try {
       final storage = FirebaseStorage.instance;
       final videosFolderRef = storage
           .ref()
-          .child('videos'); // Change 'videos' to your storage folder name
+          .child('videos'); 
 
       final ListResult result = await videosFolderRef.list();
 
-      // List to store the URLs of the videos
+
 
       for (final Reference ref in result.items) {
+        
         final url = await ref.getDownloadURL();
+        fileNames.add(ref.name);
         videoUrls.add(url);
       }
+      isLoading=false;
+      update();
 
       return videoUrls;
     } catch (e) {
+      update();
+      isLoading=false;
       print('Error fetching videos: $e');
       // Handle the error here
-      throw e;
+      rethrow;
     }
+    
   }
 }

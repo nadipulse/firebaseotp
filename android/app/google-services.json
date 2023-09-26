@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1048640877894",
-    "project_id": "postvideo-58b88",
-    "storage_bucket": "postvideo-58b88.appspot.com"
+    "project_number": "680463369985",
+    "project_id": "firebase-vidoes-otp-test",
+    "storage_bucket": "firebase-vidoes-otp-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1048640877894:android:ce29e8446ade9ee7b4e147",
+        "mobilesdk_app_id": "1:680463369985:android:82372054e1e6f6ed0ebd00",
         "android_client_info": {
           "package_name": "com.example.postvideo"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCsGe21ANu916UIApyFgHA8E7UuMmDeMok"
+          "current_key": "AIzaSyDju3MkWA2YJpuEH0mBet4rc2PMhwa14xI"
         }
       ],
       "services": {
